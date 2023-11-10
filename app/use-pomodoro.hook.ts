@@ -15,18 +15,19 @@ export default function usePomodoro() {
       case "Focus":
         if (numberCycles < 3) {
           setMode("Break");
+          return modeDurationMap["Break"];
         } else {
           setMode("Recharge");
+          return modeDurationMap["Recharge"];
         }
-        break;
       case "Break":
         setMode("Focus");
         setNumberCycles((currentNumberCycles) => currentNumberCycles + 1);
-        break;
+        return modeDurationMap["Focus"];
       case "Recharge":
         setMode("Focus");
         setNumberCycles(0);
-        break;
+        return modeDurationMap["Focus"];
     }
   }, [mode, numberCycles]);
 

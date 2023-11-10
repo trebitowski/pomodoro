@@ -14,9 +14,10 @@ export default function Home() {
 
   useEffect(() => {
     if (timer <= 0) {
-      nextMode();
+      const nextDuration = nextMode();
+      setTimer(nextDuration);
     }
-  }, [timer, nextMode]);
+  }, [timer, setTimer, nextMode]);
 
   useEffect(() => {
     setTimer(duration);
