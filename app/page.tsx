@@ -56,6 +56,7 @@ export default function Home() {
       <button onClick={() => setPaused(!isPaused)}>
         {isPaused ? "Resume" : "Pause"}
       </button>
+      <button onClick={() => setTimer(0)}>Next</button>
     </main>
   );
 }
