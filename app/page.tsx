@@ -23,20 +23,20 @@ export default function Home() {
   }, [duration, setTimer]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-emerald-500 text-yellow-50">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-emerald-500 text-white">
       <h1 className="text-4xl font-bold drop-shadow-lg">{mode}</h1>
       <h2 className="text-9xl font-bold drop-shadow-xl will-change-contents">
         {formatTimer(timer)}
       </h2>
-      <div className="grid gap-3 grid-cols-2 pt-3 drop-shadow-lg">
+      <div className="flex space-x-3 pt-3 drop-shadow-lg">
         <button
-          className="px-2.5 py-1 rounded font-semibold bg-yellow-50 text-emerald-600"
+          className="px-3.5 py-1.5 text-xl rounded font-bold bg-white text-emerald-600"
           onClick={togglePause}
         >
           {isPaused ? "Resume" : "Pause"}
         </button>
         <button
-          className="px-2.5 py-1 rounded font-semibold bg-yellow-50 text-emerald-600"
+          className="px-3.5 py-1.5 text-xl rounded font-bold bg-white text-emerald-600"
           onClick={nextMode}
         >
           Next
