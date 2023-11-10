@@ -16,12 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={
-          "text-red-100 bg-gradient-to-b from-red-800 to-red-950 " +
-          quicksand.className
-        }
-      >
+      <body className={"text-white bg-emerald-500 " + quicksand.className}>
         <svg
           className="pointer-events-none fixed isolate z-50 opacity-70 mix-blend-soft-light"
           width="100%"

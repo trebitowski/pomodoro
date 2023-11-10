@@ -20,7 +20,7 @@ export default function Home() {
   }, [timer, setTimer, nextMode]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-emerald-500 text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <h1 className="text-4xl font-bold drop-shadow-lg">{mode}</h1>
       <h2 className="text-9xl font-bold drop-shadow-xl will-change-contents">
         {formatTimer(timer)}
