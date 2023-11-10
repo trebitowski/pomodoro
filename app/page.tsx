@@ -19,10 +19,6 @@ export default function Home() {
     }
   }, [timer, setTimer, nextMode]);
 
-  useEffect(() => {
-    setTimer(duration);
-  }, [duration, setTimer]);
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-emerald-500 text-white">
       <h1 className="text-4xl font-bold drop-shadow-lg">{mode}</h1>
@@ -38,7 +34,10 @@ export default function Home() {
         </button>
         <button
           className="px-3.5 py-1.5 text-xl rounded font-bold bg-white text-emerald-600"
-          onClick={nextMode}
+          onClick={() => {
+            const nextDuration = nextMode();
+            setTimer(nextDuration);
+          }}
         >
           Next
         </button>
