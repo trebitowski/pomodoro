@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 
-export default function useCountdown(startingCountdown: number) {
-  const [timer, setTimer] = useState(startingCountdown);
-  const [isPaused, setPaused] = useState(false);
+export default function useCountdown(
+  defaultCountdown: number,
+  defaultPaused: boolean = true
+) {
+  const [timer, setTimer] = useState(defaultCountdown);
+  const [isPaused, setPaused] = useState(defaultPaused);
 
   const togglePause = useCallback(() => {
     setPaused((currentPaused) => !currentPaused);

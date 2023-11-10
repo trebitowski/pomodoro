@@ -26,14 +26,7 @@ export default function Home() {
         {formatTimer(timer)}
       </h2>
       <div className="flex space-x-3 pt-3 drop-shadow-lg">
-        <button
-          className="px-3.5 py-1.5 text-xl rounded font-bold bg-white text-emerald-600"
-          onClick={togglePause}
-        >
-          {isPaused ? "Resume" : "Pause"}
-        </button>
-        <button
-          className="px-3.5 py-1.5 text-xl rounded font-bold bg-white text-emerald-600"
+        <Button onClick={togglePause}>{isPaused ? "Start" : "Pause"}</Button>
           onClick={() => {
             const nextDuration = nextMode();
             setTimer(nextDuration);
