@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import useCountdown from "./use-countdown.hook";
 import usePomodoro from "./use-pomodoro.hook";
+import Button from "./Button";
 
 function formatTimer(time: number) {
   return `${Math.floor(time / 60)}:${String(time % 60).padStart(2, "0")}`;
@@ -27,13 +28,14 @@ export default function Home() {
       </h2>
       <div className="flex space-x-3 pt-3 drop-shadow-lg">
         <Button onClick={togglePause}>{isPaused ? "Start" : "Pause"}</Button>
+        <Button
           onClick={() => {
             const nextDuration = nextMode();
             setTimer(nextDuration);
           }}
         >
           Next
-        </button>
+        </Button>
       </div>
     </main>
   );
