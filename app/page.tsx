@@ -1,23 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import useCountdown from "./use-countdown.hook";
 
 export default function Home() {
-  const [timer, setTimer] = useState(60 * 25);
+  const { timer, setTimer, isPaused, togglePause } = useCountdown(60 * 25);
   const [numberCycles, setNumberCycles] = useState(0);
   const [mode, setMode] = useState<"Focus" | "Break" | "Recharge">("Focus");
-  const [isPaused, setPaused] = useState(false);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
-    if (!isPaused) {
-      intervalId = setInterval(() => {
-        setTimer((currentTimer) => currentTimer - 1);
-      }, 1000);
-    }
-
-    return () => window.clearInterval(intervalId);
-  }, [isPaused]);
 
   useEffect(() => {
     if (timer <= 0) {
@@ -43,7 +32,7 @@ export default function Home() {
           break;
       }
     }
-  }, [timer, mode, numberCycles]);
+  }, [timer, setTimer, mode, numberCycles]);
 
   function formatTimer(time: number) {
     return `${Math.floor(time / 60)}:${String(time % 60).padStart(2, "0")}`;
@@ -53,9 +42,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-emerald-500 text-emerald-50">
       <h1 className="text-8xl font-bold">{mode}</h1>
       <h2 className="text-6xl font-bold">{formatTimer(timer)}</h2>
-      <button onClick={() => setPaused(!isPaused)}>
-        {isPaused ? "Resume" : "Pause"}
-      </button>
+      <button onClick={togglePause}>{isPaused ? "Resume" : "Pause"}</button>
       <button onClick={() => setTimer(0)}>Next</button>
     </main>
   );
