@@ -7,7 +7,6 @@ import Button from "./Button";
 // @ts-ignore
 import useSound from "use-sound";
 
-const buttonSoundUrl = "/sounds/pop-sprite.mp3";
 const alarmSoundUrl = "/sounds/alarm.mp3";
 
 function formatTimer(time: number) {
@@ -17,14 +16,6 @@ function formatTimer(time: number) {
 export default function Home() {
   const { mode, duration, nextMode } = usePomodoro();
   const { timer, isPaused, setTimer, togglePause } = useCountdown(duration);
-
-  const [play] = useSound(buttonSoundUrl, {
-    sprite: {
-      press: [0, 70],
-      off: [75, 140],
-      on: [145, 200],
-    },
-  });
 
   const [alarm, { stop: stopAlarm }] = useSound(alarmSoundUrl);
 
@@ -46,10 +37,6 @@ export default function Home() {
       <div className="flex space-x-3 pt-5">
         <Button
           onClick={() => togglePause()}
-          onMouseDown={() => play({ id: "press" })}
-          onMouseUp={() => {
-            isPaused ? play({ id: "on" }) : play({ id: "off" });
-          }}
           data-active={!isPaused || undefined}
         >
           {isPaused ? "Start" : "Pause"}
@@ -60,8 +47,6 @@ export default function Home() {
             setTimer(nextDuration);
             togglePause(true);
           }}
-          onMouseDown={() => play({ id: "press" })}
-          onMouseUp={() => play({ id: "on" })}
         >
           Next
         </Button>
