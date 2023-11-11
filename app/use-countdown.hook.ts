@@ -7,8 +7,8 @@ export default function useCountdown(
   const [timer, setTimer] = useState(defaultCountdown);
   const [isPaused, setPaused] = useState(defaultPaused);
 
-  const togglePause = useCallback(() => {
-    setPaused((currentPaused) => !currentPaused);
+  const togglePause = useCallback((value?: boolean) => {
+    setPaused((currentPaused) => value ?? !currentPaused);
   }, []);
 
   useEffect(() => {
