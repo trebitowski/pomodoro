@@ -4,6 +4,10 @@ import { useEffect } from "react";
 import useCountdown from "./use-countdown.hook";
 import usePomodoro from "./use-pomodoro.hook";
 import Button from "./Button";
+// @ts-ignore
+import useSound from "use-sound";
+
+const soundUrl = "/sounds/pop-sprite.mp3";
 
 function formatTimer(time: number) {
   return `${Math.floor(time / 60)}:${String(time % 60).padStart(2, "0")}`;
@@ -12,6 +16,14 @@ function formatTimer(time: number) {
 export default function Home() {
   const { mode, duration, nextMode } = usePomodoro();
   const { timer, isPaused, setTimer, togglePause } = useCountdown(duration);
+
+  const [play] = useSound(soundUrl, {
+    sprite: {
+      press: [0, 70],
+      off: [75, 140],
+      on: [145, 200],
+    },
+  });
 
   useEffect(() => {
     if (timer <= 0) {
@@ -26,13 +38,25 @@ export default function Home() {
       <h2 className="text-9xl font-bold drop-shadow-xl will-change-contents">
         {formatTimer(timer)}
       </h2>
-      <div className="flex space-x-3 pt-3 drop-shadow-lg">
-        <Button onClick={togglePause}>{isPaused ? "Start" : "Pause"}</Button>
+      <div className="flex space-x-3 pt-5">
+        <Button
+          onClick={() => togglePause()}
+          onMouseDown={() => play({ id: "press" })}
+          onMouseUp={() => {
+            isPaused ? play({ id: "on" }) : play({ id: "off" });
+          }}
+          data-active={!isPaused || undefined}
+        >
+          {isPaused ? "Start" : "Pause"}
+        </Button>
         <Button
           onClick={() => {
             const nextDuration = nextMode();
             setTimer(nextDuration);
+            togglePause(true);
           }}
+          onMouseDown={() => play({ id: "press" })}
+          onMouseUp={() => play({ id: "on" })}
         >
           Next
         </Button>
