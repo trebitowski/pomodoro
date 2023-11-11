@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
 
 const modeDurationMap = {
-  Focus: 60 * 25,
-  Break: 60 * 5,
-  Recharge: 60 * 15,
+  Focus: 1000 * 60 * 25,
+  Break: 1000 * 60 * 5,
+  Recharge: 1000 * 60 * 15,
 };
 
 export default function usePomodoro() {
