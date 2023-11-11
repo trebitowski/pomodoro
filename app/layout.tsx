@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const quicksand = Quicksand({ subsets: ["latin"] });
@@ -33,6 +34,7 @@ export default function RootLayout({
           <rect width="100%" height="100%" filter="url(#bg-grain)"></rect>
         </svg>
         {children}
+        <Analytics />
       </body>
     </html>
   );
