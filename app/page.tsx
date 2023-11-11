@@ -7,7 +7,8 @@ import Button from "./Button";
 // @ts-ignore
 import useSound from "use-sound";
 
-const soundUrl = "/sounds/pop-sprite.mp3";
+const buttonSoundUrl = "/sounds/pop-sprite.mp3";
+const alarmSoundUrl = "/sounds/alarm.mp3";
 
 function formatTimer(time: number) {
   return `${Math.floor(time / 60)}:${String(time % 60).padStart(2, "0")}`;
@@ -17,7 +18,7 @@ export default function Home() {
   const { mode, duration, nextMode } = usePomodoro();
   const { timer, isPaused, setTimer, togglePause } = useCountdown(duration);
 
-  const [play] = useSound(soundUrl, {
+  const [play] = useSound(buttonSoundUrl, {
     sprite: {
       press: [0, 70],
       off: [75, 140],
@@ -25,12 +26,16 @@ export default function Home() {
     },
   });
 
+  const [alarm, { stop: stopAlarm }] = useSound(alarmSoundUrl);
+
   useEffect(() => {
     if (timer <= 0) {
       const nextDuration = nextMode();
+      stopAlarm();
+      alarm();
       setTimer(nextDuration);
     }
-  }, [timer, setTimer, nextMode]);
+  }, [timer, setTimer, nextMode, alarm, stopAlarm]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
