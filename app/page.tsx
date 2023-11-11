@@ -25,8 +25,9 @@ export default function Home() {
       stopAlarm();
       alarm();
       setTimer(nextDuration);
+      togglePause(true);
     }
-  }, [timer, setTimer, nextMode, alarm, stopAlarm]);
+  }, [timer, setTimer, nextMode, alarm, stopAlarm, togglePause]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
