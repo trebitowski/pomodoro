@@ -1,18 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+const worker = new Worker(new URL("./countdown_worker.js", import.meta.url));
 export default function useCountdown(
   defaultCountdown: number,
   defaultPaused: boolean = true
 ) {
   const [timer, setTimer] = useState(defaultCountdown);
   const [isPaused, setPaused] = useState(defaultPaused);
-  const worker = useRef(
-    new Worker(new URL("./countdown_worker.js", import.meta.url))
-  );
 
   const togglePause = useCallback((value?: boolean) => {
     setPaused((current) => value ?? !current);
-    worker.current.postMessage("update");
+    worker.postMessage("update");
   }, []);
 
   const setNewTimer = useCallback((newTimer: number) => {
@@ -21,15 +19,14 @@ export default function useCountdown(
   }, []);
 
   useEffect(() => {
-    const workerRef = worker.current;
     if (!isPaused) {
-      worker.current.onmessage = (event) => {
+      worker.onmessage = (event) => {
         setTimer((current) => current - event.data);
       };
-      worker.current.postMessage("create");
+      worker.postMessage("create");
     }
     return () => {
-      workerRef.postMessage("clear");
+      worker.postMessage("clear");
     };
   }, [isPaused]);
 

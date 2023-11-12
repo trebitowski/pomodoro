@@ -1,22 +1,21 @@
-let previousTime = performance.now();
-
 self.onmessage = (event) => {
   if (event.data === "create") {
     create();
   } else if (event.data === "clear") {
     clear();
   } else if (event.data === "update") {
-    previousTime = performance.now();
+    self.previousTime = performance.now();
   }
 };
 
 function create() {
   clearInterval();
-
+  self.previousTime = performance.now();
   const intervalId = setInterval(() => {
+    console.log("tick");
     const now = performance.now();
-    self.postMessage(now - previousTime);
-    previousTime = now;
+    self.postMessage(now - self.previousTime);
+    self.previousTime = now;
   }, 500);
 
   self.intervalId = intervalId;
