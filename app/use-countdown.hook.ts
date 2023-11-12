@@ -1,41 +1,40 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function useCountdown(
   defaultCountdown: number,
   defaultPaused: boolean = true
 ) {
-  const [startTime, setStartTime] = useState(Date.now());
   const [timer, setTimer] = useState(defaultCountdown);
   const [isPaused, setPaused] = useState(defaultPaused);
-  const [_, rerender] = useState(0);
+  const worker = useRef(
+    new Worker(new URL("./countdown_worker.js", import.meta.url))
+  );
 
   const togglePause = useCallback((value?: boolean) => {
-    setPaused((currentPaused) => {
-      const newValue = value ?? !currentPaused;
-      if (!newValue) {
-        setStartTime(Date.now());
-      }
-      return newValue;
-    });
+    setPaused((current) => value ?? !current);
+    worker.current.postMessage("update");
   }, []);
 
   const setNewTimer = useCallback((newTimer: number) => {
     setTimer(newTimer);
-    setStartTime(Date.now());
+    setPaused(true);
   }, []);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
+    const workerRef = worker.current;
     if (!isPaused) {
-      intervalId = setInterval(() => {
-        rerender((current) => (current + 1) % 10);
-      }, 1000);
+      worker.current.onmessage = (event) => {
+        setTimer((current) => current - event.data);
+      };
+      worker.current.postMessage("create");
     }
-    return () => window.clearInterval(intervalId);
+    return () => {
+      workerRef.postMessage("clear");
+    };
   }, [isPaused]);
 
   return {
-    timer: Math.ceil((startTime + timer - Date.now()) / 1000),
+    timer: Math.ceil(timer / 1000),
     setTimer: setNewTimer,
     isPaused,
     togglePause,
