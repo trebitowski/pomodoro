@@ -17,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={"text-white bg-jade-500 " + quicksand.className}>
+      <body
+        className={`text-white bg-jade-500 overscroll-none ${quicksand.className}`}
+      >
         <svg
           className="pointer-events-none fixed isolate opacity-70 mix-blend-soft-light"
           width="100%"

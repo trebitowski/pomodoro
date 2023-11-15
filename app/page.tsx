@@ -38,7 +38,7 @@ export default function Home() {
   }, [isPaused, mode, timer]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center overscroll-none">
+    <main className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="text-4xl font-bold drop-shadow-lg">{mode}</h1>
       <h2 className="text-9xl font-bold drop-shadow-xl will-change-contents">
         {formatTimer(timer)}
