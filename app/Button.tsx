@@ -29,7 +29,7 @@ export default function Button(props: ButtonProps) {
     >
       <span className="absolute inset-0 rounded-xl bg-black/20 translate-y-[2px] filter blur-sm" />
       <span className="absolute inset-0 rounded-xl button-edge" />
-      <span className="block bg-white py-3 px-[2.625rem] font-bold rounded-xl text-xl text-jade-700 button-idle group-active:button-active will-change-transform group-hover:button-hover group-data-[active]:button-active">
+      <span className="block bg-white py-3 px-[2.625rem] font-bold rounded-xl text-xl text-red-700 button-idle group-active:button-active will-change-transform group-hover:button-hover group-data-[active]:button-active">
         {children}
       </span>
     </button>
